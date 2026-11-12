@@ -143,4 +143,4 @@ https://chat.whatsapp.com/KrecviKYS9a47HrJIZkxHF
 
 ---
 
-Dikembangkan oleh **AgusSamp**.
+Dikembangkan oleh **AgusSamp** dan **Suzu**.
