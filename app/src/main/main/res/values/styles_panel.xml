@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dasar keycap (ukuran/margin diatur di layout supaya aman di semua versi Android): kaca gelap, label Montserrat tebal, menyusut saat ditekan -->
+    <style name="PanelKey">
+        <item name="android:background">@drawable/bg_key</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:stateListAnimator">@animator/key_press</item>
+        <item name="android:textColor">@color/panel_key_text</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- ESC / TAB / ALT / SPC -->
+    <style name="PanelKey.Wide">
+        <item name="android:letterSpacing">0.06</item>
+        <item name="android:textSize">@dimen/_7ssp</item>
+    </style>
+
+    <!-- F H 2 Y N C G -->
+    <style name="PanelKey.Letter">
+        <item name="android:textSize">@dimen/_10ssp</item>
+    </style>
+</resources>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minimap</title>
+<style>
+:root {
+    --accent: #5ee7ff;
+    --accent-2: #3b82f6;
+    --glass-bg: rgba(12, 18, 30, 0.45);
+    --glass-border: rgba(255, 255, 255, 0.18);
+    --text: #ffffff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+
+html, body {
+    background: transparent;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    font-family: "Segoe UI", "Roboto", Arial, sans-serif;
+}
+
+body { padding: 14px; }
+
+/* ===== Container minimap ===== */
+.minimap {
+    position: relative;
+    width: 232px;
+    height: 232px;
+    border-radius: 22px;
+    overflow: hidden;
+    background: var(--glass-bg);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border: 1px solid var(--glass-border);
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Gradient border tipis di atas */
+.minimap::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(94,231,255,0.6), transparent 40%, transparent 60%, rgba(59,130,246,0.5));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+/* ===== Gambar peta ===== */
+.map-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.9;
+    filter: contrast(1.08) saturate(1.15) brightness(0.95);
+    transition: transform 0.4s ease;
+}
+
+/* Grid halus */
+.map-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(94,231,255,0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(94,231,255,0.07) 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+}
+
+/* Vignette */
+.map-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 45%, rgba(0, 0, 0, 0.55) 100%);
+    pointer-events: none;
+}
+
+/* Cincin radar di tengah */
+.radar-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120px;
+    height: 120px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1px dashed rgba(94,231,255,0.35);
+    pointer-events: none;
+}
+.radar-ring.inner {
+    width: 64px;
+    height: 64px;
+    border-style: solid;
+    border-color: rgba(94,231,255,0.25);
+}
+
+/* ===== Panah pemain (berputar sesuai arah) ===== */
+.player-wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 36px;
+    height: 36px;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    pointer-events: none;
+}
+
+.player-glow {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(94,231,255,0.55), transparent 70%);
+    animation: breathe 2.2s ease-in-out infinite;
+}
+
+.player-arrow {
+    position: absolute;
+    inset: 0;
+    transition: transform 0.25s ease-out;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+
+@keyframes breathe {
+    0%, 100% { transform: scale(0.9); opacity: 0.7; }
+    50%      { transform: scale(1.15); opacity: 1; }
+}
+
+/* ===== Badge kompas ===== */
+.compass {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    min-width: 30px;
+    height: 24px;
+    padding: 0 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(94,231,255,0.35);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    z-index: 5;
+}
+
+/* Label N/E/S/W di tepi */
+.cardinal {
+    position: absolute;
+    color: rgba(255,255,255,0.85);
+    font-size: 10px;
+    font-weight: 700;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+    z-index: 4;
+}
+.cardinal.n { top: 6px;    left: 50%; transform: translateX(-50%); color: var(--accent); }
+.cardinal.s { bottom: 6px; left: 50%; transform: translateX(-50%); }
+.cardinal.w { left: 8px;   top: 50%;  transform: translateY(-50%); }
+.cardinal.e { right: 8px;  top: 50%;  transform: translateY(-50%); }
+</style>
+</head>
+<body>
+
+<div class="minimap" id="minimap">
+    <!-- Taruh file gambar peta di folder yang sama, contoh: map.jpg -->
+    <img class="map-image" id="map-img" src="map.jpg" alt=""
+         onerror="if(!this.dataset.fb){this.dataset.fb=1;this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/San_Andreas_map.jpg/512px-San_Andreas_map.jpg';}">
+
+    <div class="map-grid"></div>
+    <div class="map-vignette"></div>
+
+    <div class="radar-ring"></div>
+    <div class="radar-ring inner"></div>
+
+    <span class="cardinal n">N</span>
+    <span class="cardinal s">S</span>
+    <span class="cardinal w">W</span>
+    <span class="cardinal e">E</span>
+
+    <div class="compass" id="compass-dir">N</div>
+
+    <div class="player-wrap">
+        <div class="player-glow"></div>
+        <svg class="player-arrow" id="player-arrow" viewBox="0 0 36 36">
+            <defs>
+                <linearGradient id="arrowGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#ffffff"/>
+                    <stop offset="100%" stop-color="#5ee7ff"/>
+                </linearGradient>
+            </defs>
+            <path d="M18 4 L30 30 L18 24 L6 30 Z"
+                  fill="url(#arrowGrad)"
+                  stroke="rgba(0,0,0,0.45)" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+    </div>
+</div>
+
+<script>
+    const DIRS = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+
+    // angle: sudut pemain dalam derajat (0 = utara)
+    function updatePlayerDirection(angle) {
+        const a = ((parseFloat(angle) % 360) + 360) % 360;
+        const index = Math.round(a / 45) % 8;
+        document.getElementById('compass-dir').innerText = DIRS[index];
+
+        // Putar panah pemain. Peta ikut berputar berlawanan arah supaya terasa seperti minimap bergerak.
+        document.getElementById('player-arrow').style.transform = 'rotate(0deg)';
+        document.getElementById('map-img').style.transform = 'rotate(' + (-a) + 'deg) scale(1.2)';
+    }
+
+    function onCefEvent(event, data) {
+        if (event === "updatePlayerDirection") updatePlayerDirection(data);
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weapon Menu</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+    --white: #ffffff;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.25);
+    --glass-hover: rgba(255, 255, 255, 0.15);
+    --text-muted: rgba(255, 255, 255, 0.6);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+
+body {
+    background: transparent;
+    font-family: "Segoe UI", Arial, sans-serif;
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* Overlay Background */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+/* Class active akan memunculkan menu */
+.overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Panel Utama */
+.weapon-panel {
+    width: 680px;
+    background: rgba(20, 20, 20, 0.7);
+    backdrop-filter: blur(25px) saturate(120%);
+    -webkit-backdrop-filter: blur(25px) saturate(120%);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: 
+        0 10px 40px rgba(0, 0, 0, 0.5),
+        inset 0 1px 2px rgba(255, 255, 255, 0.1);
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.overlay.active .weapon-panel {
+    transform: scale(1);
+}
+
+/* Header */
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.panel-title {
+    color: var(--white);
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.panel-title i {
+    color: var(--white);
+    font-size: 20px;
+}
+
+.close-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+/* Grid Slot */
+.slots-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+/* Desain Kotak Slot */
+.slot {
+    position: relative;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    padding: 15px;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+.slot:hover {
+    background: var(--glass-hover);
+    border-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+}
+
+.slot.active {
+    border-color: var(--white);
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.3), inset 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.slot-number {
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    font-size: 10px;
+    font-weight: 900;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+}
+
+.slot-icon {
+    font-size: 32px;
+    color: var(--white);
+    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.5));
+}
+
+.slot-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.slot-ammo {
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--text-muted);
+}
+
+/* Slot Kosong */
+.slot.empty {
+    opacity: 0.3;
+    cursor: default;
+}
+
+.slot.empty:hover {
+    transform: none;
+    border-color: var(--glass-border);
+    background: var(--glass-bg);
+    box-shadow: none;
+}
+
+/* Footer */
+.panel-footer {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.key-hint { display: flex; align-items: center; gap: 6px; }
+
+.key {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 2px 8px;
+    border-radius: 4px;
+    color: var(--white);
+    font-weight: 900;
+    font-size: 10px;
+}
+</style>
+</head>
+<body>
+
+<div class="overlay" id="weapon-overlay">
+    <div class="weapon-panel">
+        
+        <div class="panel-header">
+            <div class="panel-title">
+                <i class="fa-solid fa-gun"></i>
+                Weapon Inventory
+            </div>
+            <div class="close-btn" onclick="closeMenu()">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+        </div>
+
+        <div class="slots-grid" id="slots-grid">
+            <div class="slot" data-slot="1" onclick="selectWeapon(1, 'Pistol')">
+                <span class="slot-number">SLOT 1</span>
+                <i class="fa-solid fa-gun slot-icon"></i>
+                <span class="slot-name">Pistol</span>
+                <span class="slot-ammo" id="ammo-1">12 / 48</span>
+            </div>
+            <div class="slot" data-slot="2" onclick="selectWeapon(2, 'SMG')">
+                <span class="slot-number">SLOT 2</span>
+                <i class="fa-solid fa-gun slot-icon"></i>
+                <span class="slot-name">SMG</span>
+                <span class="slot-ammo" id="ammo-2">30 / 90</span>
+            </div>
+            <div class="slot" data-slot="3" onclick="selectWeapon(3, 'Shotgun')">
+                <span class="slot-number">SLOT 3</span>
+                <i class="fa-solid fa-gun slot-icon"></i>
+                <span class="slot-name">Shotgun</span>
+                <span class="slot-ammo" id="ammo-3">8 / 32</span>
+            </div>
+            <div class="slot" data-slot="4" onclick="selectWeapon(4, 'Rifle')">
+                <span class="slot-number">SLOT 4</span>
+                <i class="fa-solid fa-gun slot-icon"></i>
+                <span class="slot-name">Rifle</span>
+                <span class="slot-ammo" id="ammo-4">30 / 120</span>
+            </div>
+            <div class="slot" data-slot="5" onclick="selectWeapon(5, 'Sniper')">
+                <span class="slot-number">SLOT 5</span>
+                <i class="fa-solid fa-gun slot-icon"></i>
+                <span class="slot-name">Sniper</span>
+                <span class="slot-ammo" id="ammo-5">5 / 20</span>
+            </div>
+            <div class="slot empty" data-slot="6">
+                <span class="slot-number">SLOT 6</span>
+                <i class="fa-solid fa-plus slot-icon"></i>
+                <span class="slot-name">Empty</span>
+            </div>
+        </div>
+
+        <div class="panel-footer">
+            <div class="key-hint"><span class="key">1-6</span> Pilih Senjata</div>
+            <div class="key-hint"><span class="key">ESC</span> Tutup</div>
+            <div class="key-hint"><span class="key">LMB</span> Tembak</div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    const overlay = document.getElementById('weapon-overlay');
+
+    function openMenu() {
+        overlay.classList.add('active');
+        if (typeof cef !== 'undefined') cef.emit('weaponMenuOpened');
+    }
+
+    function closeMenu() {
+        overlay.classList.remove('active');
+        if (typeof cef !== 'undefined') cef.emit('weaponMenuClosed');
+    }
+
+    function selectWeapon(slot, name) {
+        document.querySelectorAll('.slot').forEach(s => s.classList.remove('active'));
+        const selected = document.querySelector(`.slot[data-slot="${slot}"]`);
+        if (selected) selected.classList.add('active');
+        
+        if (typeof cef !== 'undefined') {
+            cef.emit('selectWeapon', `${slot}|${name}`);
+        } else {
+            console.log(`Selected: Slot ${slot} - ${name}`);
+        }
+        setTimeout(closeMenu, 200);
+    }
+
+    function updateAmmo(data) {
+        const parts = data.split('|');
+        if (parts.length < 3) return;
+        const el = document.getElementById(`ammo-${parts[0]}`);
+        if (el) el.innerText = `${parts[1]} / ${parts[2]}`;
+    }
+
+    function onCefEvent(event, data) {
+        if (event === "openWeaponMenu") openMenu();
+        if (event === "closeWeaponMenu") closeMenu();
+        if (event === "updateAmmo") updateAmmo(data);
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeMenu();
+    });
+
+    // =========================================
+    // UNTUK TESTING DI BROWSER (AUTO OPEN)
+    // Hapus atau comment baris di bawah ini saat
+    // dimasukkan ke dalam game (CEF)
+    // =========================================
+    window.onload = () => {
+        openMenu();
+    };
+</script>
+
+</body>
+</html>

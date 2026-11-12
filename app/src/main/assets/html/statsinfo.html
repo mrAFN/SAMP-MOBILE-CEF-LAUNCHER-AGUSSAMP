@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Player Info</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+:root {
+    --cyan: #00eaff;
+    --blue: #4285ff;
+    --white: #eafaff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body {
+    background: transparent;
+    font-family: "Segoe UI", Arial, sans-serif;
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    height: 100vh;
+    padding: 120px 15px 15px 15px;
+}
+
+/* =========================================
+   CONTAINER UTAMA
+   ========================================= */
+.info-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    animation: appear 1.2s ease-out both;
+}
+
+.top-row, .mid-row, .bot-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+/* =========================================
+   BADGE LIQUID GLASS (gaya HUD water level)
+   ========================================= */
+.glass-badge {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 12px;
+    border-radius: 8px;
+
+    /* Liquid Glass — putih transparan tipis seperti HUD */
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 6px 26px 0 rgba(0, 0, 0, 0.37);
+
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+}
+
+.glass-badge i {
+    font-size: 13px;
+    color: var(--cyan);
+    filter: drop-shadow(0 0 4px rgba(0, 234, 255, 0.6));
+}
+
+.label {
+    color: rgba(234, 250, 255, 0.75);
+    font-size: 10px;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+}
+
+.value {
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+/* =========================================
+   BADGE LOGO SERVER (SVG)
+   ========================================= */
+.badge-server {
+    padding: 5px 10px;
+    /* Background putih transparan tipis, sama seperti badge lain */
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-svg {
+    width: 28px;
+    height: 28px;
+    filter: drop-shadow(0 0 5px #00cfff) drop-shadow(0 0 12px #167dff);
+    animation: float 3.5s ease-in-out infinite;
+}
+
+/* =========================================
+   SPESIFIK WARNA (ikon & border tetap berwarna)
+   ========================================= */
+.badge-cash i { color: #34c759; filter: drop-shadow(0 0 4px rgba(52,199,89,0.6)); }
+.badge-bank i { color: #4285ff; filter: drop-shadow(0 0 4px rgba(66,133,255,0.6)); }
+.badge-faction { border-color: rgba(255, 149, 0, 0.45); }
+.badge-faction i { color: #ff9500; filter: drop-shadow(0 0 4px rgba(255,149,0,0.6)); }
+.badge-faction .value { color: #ff9500; text-shadow: 0 0 6px rgba(255,149,0,0.5); }
+
+/* ANIMASI */
+@keyframes appear {
+    from { opacity: 0; transform: translateX(15px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2.5px); }
+}
+</style>
+</head>
+<body>
+
+<div class="info-panel">
+    
+    <!-- Baris 1: ID, Ping, Logo Emblem -->
+    <div class="top-row">
+        <div class="glass-badge">
+            <i class="fa-solid fa-id-badge"></i>
+            <span class="label">ID</span>
+            <span class="value" id="p-id">1</span>
+        </div>
+        
+        <div class="glass-badge">
+            <i class="fa-solid fa-wifi"></i>
+            <span class="label">PING</span>
+            <span class="value" id="p-ping">145</span>
+        </div>
+
+        <!-- Badge Server pakai SVG Logo -->
+        <div class="glass-badge badge-server">
+            <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#ffffff"/>
+                        <stop offset="42%" stop-color="#00eaff"/>
+                        <stop offset="100%" stop-color="#3970ff"/>
+                    </linearGradient>
+                </defs>
+                <polygon points="50,4 87,25 87,70 50,94 13,70 13,25" fill="#07182c" fill-opacity=".92" stroke="url(#metal)" stroke-width="3"/>
+                <polygon points="50,12 80,30 80,66 50,86 20,66 20,30" fill="none" stroke="#20dfff" stroke-opacity=".45" stroke-width="1.5"/>
+                <path d="M29 67 L43 31 L54 31 L69 67 M36 50 L61 50" fill="none" stroke="url(#metal)" stroke-width="7"/>
+                <path d="M53 39 L65 39 L65 47 L57 47 L57 57 L66 57 L66 66" fill="none" stroke="#ffffff" stroke-width="4"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Baris 2: Cash, Bank -->
+    <div class="mid-row">
+        <div class="glass-badge badge-cash">
+            <i class="fa-solid fa-money-bill-wave"></i>
+            <span class="label">CASH</span>
+            <span class="value" id="p-cash">$502</span>
+        </div>
+
+        <div class="glass-badge badge-bank">
+            <i class="fa-solid fa-building-columns"></i>
+            <span class="label">BANK</span>
+            <span class="value" id="p-bank">$2.5K</span>
+        </div>
+    </div>
+
+    <!-- Baris 3: Fraction -->
+    <div class="bot-row">
+        <div class="glass-badge badge-faction">
+            <i class="fa-solid fa-users"></i>
+            <span class="label">FRACTION</span>
+            <span class="value" id="p-faction">HOODRATS</span>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // =========================================
+    // UPDATE DATA DARI PAWN
+    // Format: "ID|Ping|Cash|Bank|Fraction"
+    // =========================================
+    function updatePlayerInfo(data) {
+        const parts = data.split('|');
+        if (parts.length < 5) return;
+
+        document.getElementById('p-id').innerText = parts[0];
+        document.getElementById('p-ping').innerText = parts[1];
+        document.getElementById('p-cash').innerText = '$' + parts[2];
+        document.getElementById('p-bank').innerText = '$' + parts[3];
+        document.getElementById('p-faction').innerText = parts[4];
+    }
+
+    function onCefEvent(event, data) {
+        if (event === "updatePlayerInfo") {
+            updatePlayerInfo(data);
+        }
+    }
+</script>
+
+</body>
+</html>

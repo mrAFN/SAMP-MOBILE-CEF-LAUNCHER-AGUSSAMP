@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guz 1.1</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: transparent;
+    font-family: "Segoe UI", Arial, sans-serif;
+    overflow: hidden;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 17px;
+    width: fit-content;
+}
+
+/* LOGO — LIQUID GLASS iOS */
+.logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 17px;
+    font-weight: 600;
+    font-style: italic;
+    font-family: Georgia, "Times New Roman", serif;
+    position: relative;
+    overflow: hidden;
+
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px) saturate(160%);
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
+
+    border: 1px solid rgba(255, 255, 255, 0.22);
+
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.35),
+        inset 0 -1px 1px rgba(255, 255, 255, 0.08),
+        0 5px 14px rgba(0, 0, 0, 0.35);
+
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+    flex-shrink: 0;
+}
+
+.logo::before {
+    content: "";
+    position: absolute;
+    top: -40%;
+    left: -20%;
+    width: 140%;
+    height: 90%;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.45) 0%,
+        rgba(255, 255, 255, 0.12) 40%,
+        transparent 100%
+    );
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(5px);
+    opacity: .7;
+}
+
+.logo::after {
+    content: "";
+    position: absolute;
+    bottom: -30%;
+    right: -20%;
+    width: 90%;
+    height: 90%;
+    background: radial-gradient(
+        circle,
+        rgba(66, 133, 255, 0.35),
+        transparent 70%
+    );
+    pointer-events: none;
+    filter: blur(7px);
+}
+
+/* TEXT */
+.brand {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: fit-content;
+}
+
+.title {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 2.2px;
+    color: #f2f6ff;
+    text-transform: uppercase;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    white-space: nowrap;
+}
+
+.title span {
+    color: #9fc4ff;
+    font-weight: 400;
+}
+
+/* =========================================
+   GARIS — LIQUID GLASS LURUS, SATU GARIS UTUH
+   Gradient opacity + aksen titik di ujung
+   ========================================= */
+.lines {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+    height: 4px;
+}
+
+/* Garis utama — utuh, gradasi memudar ke kanan */
+.lines .bar {
+    flex: 1;
+    height: 3px;
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+
+    /* Gradient putih transparan → biru lembut → transparan */
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.85) 0%,
+        rgba(255, 255, 255, 0.6) 25%,
+        rgba(159, 196, 255, 0.5) 55%,
+        rgba(66, 133, 255, 0.25) 80%,
+        rgba(66, 133, 255, 0.05) 100%
+    );
+
+    /* Border tipis kaca */
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.35),
+        0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+/* Kilau kaca melintas */
+.lines .bar::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -30%;
+    width: 30%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.8),
+        transparent
+    );
+    animation: shine 4s ease-in-out infinite;
+}
+
+@keyframes shine {
+    0%, 60% { left: -30%; opacity: 0; }
+    70% { opacity: 1; }
+    90%, 100% { left: 110%; opacity: 0; }
+}
+
+/* Aksen titik kecil di ujung kanan */
+.lines .dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow:
+        0 0 4px rgba(255, 255, 255, 0.6),
+        0 0 8px rgba(66, 133, 255, 0.4);
+    flex-shrink: 0;
+    animation: pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: .5; transform: scale(0.9); }
+    50%      { opacity: 1;  transform: scale(1.1); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <div class="logo">G</div>
+
+    <div class="brand">
+        <div class="title">Guz <span>1.1</span></div>
+
+        <div class="lines">
+            <div class="bar"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

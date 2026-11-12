@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Modern Radial Menu - Solid Black</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+        background: transparent;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    /* PERKECIL CONTAINER UTAMA */
+    .radial-container {
+        position: relative;
+        width: 380px;
+        height: 380px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* =========================================
+       MENU UTAMA
+       ========================================= */
+    .main-ring {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .main-ring.blurred {
+        transform: scale(0.85);
+        opacity: 0.3;
+        pointer-events: none;
+    }
+
+    /* Tombol Tengah (EXIT) */
+    .center-btn {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 55px;
+        height: 55px;
+        /* Ubah jadi Hitam Padat */
+        background: #000000;
+        border: 2px solid #333;
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        cursor: pointer;
+        z-index: 10;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+        transition: all 0.2s ease;
+    }
+    .center-btn:hover {
+        transform: translate(-50%, -50%) scale(1.05);
+        background: #1a1a1a;
+        box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+    }
+    .center-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+    .center-btn span {
+        font-size: 8px;
+        font-weight: 800;
+        margin-top: 2px;
+        letter-spacing: 1px;
+    }
+
+    /* =========================================
+       BOX MENU (BELAH KETUPAT)
+       ========================================= */
+    .menu-node {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 50px;
+        height: 50px;
+        /* Ubah jadi Hitam Padat */
+        background: #000000;
+        border: 1px solid #222;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #a1a1aa;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-top: -25px;
+        margin-left: -25px;
+    }
+
+    .menu-node:hover {
+        background: #111111;
+        border-color: #555;
+        color: #fff;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+    }
+
+    .node-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+    }
+
+    .menu-node svg {
+        width: 18px;
+        height: 18px;
+        margin-bottom: 2px;
+    }
+    .menu-node span {
+        font-size: 7px;
+        font-weight: 600;
+        text-align: center;
+        max-width: 40px;
+        line-height: 1.1;
+        letter-spacing: 0.3px;
+    }
+
+    /* Posisi Ring */
+    .node-1 { transform: rotate(45deg) translate(0, -90px) rotate(-45deg); }
+    .node-2 { transform: rotate(45deg) translate(90px, 0) rotate(-45deg); }
+    .node-3 { transform: rotate(45deg) translate(0, 90px) rotate(-45deg); }
+    .node-4 { transform: rotate(45deg) translate(-90px, 0) rotate(-45deg); }
+    .node-5 { transform: rotate(45deg) translate(63px, -63px) rotate(-45deg); }
+    .node-6 { transform: rotate(45deg) translate(63px, 63px) rotate(-45deg); }
+    .node-7 { transform: rotate(45deg) translate(-63px, 63px) rotate(-45deg); }
+    .node-8 { transform: rotate(45deg) translate(-63px, -63px) rotate(-45deg); }
+
+    /* Hover Fix */
+    .node-1:hover { transform: rotate(45deg) translate(0, -90px) rotate(-45deg); }
+    .node-2:hover { transform: rotate(45deg) translate(90px, 0) rotate(-45deg); }
+    .node-3:hover { transform: rotate(45deg) translate(0, 90px) rotate(-45deg); }
+    .node-4:hover { transform: rotate(45deg) translate(-90px, 0) rotate(-45deg); }
+    .node-5:hover { transform: rotate(45deg) translate(63px, -63px) rotate(-45deg); }
+    .node-6:hover { transform: rotate(45deg) translate(63px, 63px) rotate(-45deg); }
+    .node-7:hover { transform: rotate(45deg) translate(-63px, 63px) rotate(-45deg); }
+    .node-8:hover { transform: rotate(45deg) translate(-63px, -63px) rotate(-45deg); }
+
+    /* =========================================
+       SUB-MENU
+       ========================================= */
+    .submenu {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        z-index: 20;
+    }
+
+    .submenu.active {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .sub-item {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        /* Ubah jadi Hitam Padat */
+        background: #000000;
+        border: 1px solid #222;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #d4d4d8;
+        cursor: pointer;
+        transition: all 0.2s;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.8);
+        transform: translate(-50%, -50%);
+    }
+
+    .sub-item:hover {
+        background: #111111;
+        color: #fff;
+        border-color: #555;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+    }
+
+    .sub-item svg { width: 18px; height: 18px; margin-bottom: 2px; pointer-events: none; }
+    .sub-item span { font-size: 7px; font-weight: 700; pointer-events: none; text-align: center; }
+
+    /* Tombol Tutup (Warna Merah) */
+    .sub-close {
+        background: #330000; /* Merah Gelap Padat */
+        border-color: #550000;
+        color: #ff8888;
+    }
+    .sub-close:hover {
+        background: #550000;
+        border-color: #ff0000;
+        color: #ffffff;
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+    }
+
+    /* Posisi Sub-menu Lainnya */
+    #sub-others .sub-item:nth-child(1) { top: -100px; left: -55px; }
+    #sub-others .sub-item:nth-child(2) { top: -125px; left: 0px; }
+    #sub-others .sub-item:nth-child(3) { top: -100px; left: 55px; }
+    #sub-others .sub-item:nth-child(4) { top: -100px; left: 115px; }
+
+    /* Posisi Sub-menu Car (Grid di Kanan) */
+    #sub-car { 
+        display: grid; 
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 8px;
+        margin-left: 90px; 
+    }
+    
+    #sub-car {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) translateX(100px) scale(0.8);
+        opacity: 0;
+        pointer-events: none;
+    }
+    #sub-car.active {
+        transform: translate(-50%, -50%) translateX(100px) scale(1);
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    #sub-car .sub-item {
+        position: relative;
+        transform: none;
+        top: auto;
+        left: auto;
+    }
+    #sub-car .sub-item:hover { transform: translateY(-2px); }
+
+    #sub-car .sub-close {
+        grid-column: span 2;
+        width: 100%;
+        height: 30px;
+        flex-direction: row;
+        gap: 5px;
+        border-radius: 8px;
+    }
+    #sub-car .sub-close svg { margin-bottom: 0; width: 12px; height: 12px; }
+    #sub-car .sub-close span { font-size: 8px; }
+
+    .overlay { position: fixed; inset: 0; display: none; z-index: 15; }
+    .overlay.active { display: block; }
+
+</style>
+</head>
+<body>
+
+    <div class="overlay" id="overlay" onclick="closeSubmenus()"></div>
+
+    <div class="radial-container">
+        
+        <!-- MENU UTAMA -->
+        <div class="main-ring" id="mainRing">
+            
+            <!-- Tombol Tengah: EXIT -->
+            <div class="center-btn" onclick="send('close')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                <span>EXIT</span>
+            </div>
+
+            <div class="menu-node node-1" onclick="send('phone')">
+                <div class="node-content">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                    <span>Phone</span>
+                </div>
+            </div>
+
+            <div class="menu-node node-2" onclick="send('stats')">
+                <div class="node-content">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                    <span>Stats</span>
+                </div>
+            </div>
+
+            <div class="menu-node node-3" onclick="openSubmenu('sub-car')">
+                <div class="node-content">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><path d="M9 17h6"></path><circle cx="17" cy="17" r="2"></circle></svg>
+                    <span>My Car</span>
+                </div>
+            </div>
+
+            <div class="menu-node node-4" onclick="send('document')">
+                <div class="node-content">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span>Document</span>
+                </div>
+            </div>
+
+            <div class="menu-node node-5" onclick="send('gps')">
+                <div class="node-content">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    <span>GPS</span>
+                </div>
+            </div>
+
+            <div class="menu-node node-6" onclick="send('inv')">
+                <div class="node-content">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    <span>Inv</span>
+                </div>
+            </div>
+
+            <div class="menu-node node-7" onclick="openSubmenu('sub-others')">
+                <div class="node-content">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
+                    <span>Lainnya</span>
+                </div>
+            </div>
+
+            <div class="menu-node node-8" onclick="send('settings')">
+                <div class="node-content">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                    <span>Settings</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- SUBMENU: LAINNYA -->
+        <div class="submenu" id="sub-others">
+            <div class="sub-item" onclick="send('baju')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"></path></svg>
+                <span>Baju</span>
+            </div>
+            <div class="sub-item" onclick="send('location')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <span>Location</span>
+            </div>
+            <div class="sub-item" onclick="send('licenses')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                <span>Licenses</span>
+            </div>
+            <div class="sub-item sub-close" onclick="closeSubmenus()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+                <span>Tutup</span>
+            </div>
+        </div>
+
+        <!-- SUBMENU: MY CAR PANEL -->
+        <div class="submenu" id="sub-car">
+            <div class="sub-item" onclick="send('key')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+                <span>Key</span>
+            </div>
+            <div class="sub-item" onclick="send('engine')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                <span>Engine</span>
+            </div>
+            <div class="sub-item" onclick="send('lock')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <span>Lock</span>
+            </div>
+            <div class="sub-item" onclick="send('unlock')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>
+                <span>Unlock</span>
+            </div>
+            <div class="sub-item" onclick="send('light')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7z"></path></svg>
+                <span>Light</span>
+            </div>
+            <div class="sub-item" onclick="send('cardoc')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                <span>Car Doc</span>
+            </div>
+            <div class="sub-item sub-close" onclick="closeSubmenus()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+                <span>Kembali</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const mainRing = document.getElementById('mainRing');
+        const overlay = document.getElementById('overlay');
+
+        function openSubmenu(id) {
+            closeSubmenus();
+            document.getElementById(id).classList.add('active');
+            mainRing.classList.add('blurred');
+            overlay.classList.add('active');
+        }
+
+        function closeSubmenus() {
+            document.querySelectorAll('.submenu').forEach(el => {
+                el.classList.remove('active');
+            });
+            mainRing.classList.remove('blurred');
+            overlay.classList.remove('active');
+        }
+
+        function send(action) {
+            if (typeof cef !== 'undefined') {
+                cef.emit('radialAction', action);
+            } else {
+                console.log('CEF Action:', action);
+            }
+        }
+    </script>
+</body>
+</html>

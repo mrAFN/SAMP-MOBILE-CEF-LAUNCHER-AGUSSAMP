@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Vehicle Rental</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+        /* Ganti font custom dgn system font -> 0 request, instan render */
+        font-family: Arial, Helvetica, sans-serif;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background: transparent;
+    }
+
+    /* Container: HAPUS backdrop-filter (berat), pakai solid-ish rgba */
+    .rent-container {
+        width: 460px;
+        background: rgba(15, 15, 15, 0.92);   /* lebih solid, tidak perlu blur */
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); /* shadow lebih kecil */
+        display: flex;
+        flex-direction: column;
+        /* Animasi opacity only -> compositor-only, ga re-layout */
+        animation: fadeIn 0.18s linear;
+        will-change: opacity;
+    }
+
+    .header {
+        padding: 14px 18px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .header h2 {
+        color: #fff;
+        font-size: 18px;
+        font-weight: bold;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    .header h2 span {
+        display: block;
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.5);
+        font-weight: bold;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    .close-btn {
+        background: transparent;
+        border: none;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 20px;
+        line-height: 1;
+        cursor: pointer;
+        padding: 0 4px;
+    }
+
+    .close-btn:hover { color: #fff; }
+
+    /* Grid */
+    .vehicle-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        padding: 18px;
+    }
+
+    .v-card {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 8px;
+        padding: 14px 8px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        cursor: pointer;
+        /* transition spesifik, bukan 'all' */
+        transition: background-color 0.15s, border-color 0.15s;
+    }
+
+    /* Hapus transform translateY -> hindari repaint+layout shift */
+    .v-card:hover {
+        background: rgba(255, 255, 255, 0.10);
+        border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .v-card:active {
+        background: rgba(255, 255, 255, 0.16);
+    }
+
+    /* Ganti Font Awesome -> emoji/text icon (0 network, instan) */
+    .v-icon {
+        font-size: 26px;
+        line-height: 1;
+        margin-bottom: 10px;
+        /* no text-shadow */
+    }
+
+    .v-name {
+        color: #fff;
+        font-size: 11px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 6px;
+        text-transform: uppercase;
+    }
+
+    .v-price {
+        background: rgba(0, 0, 0, 0.45);
+        color: #fff;
+        font-size: 10px;
+        font-weight: bold;
+        padding: 3px 8px;
+        border-radius: 4px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+    }
+</style>
+</head>
+<body>
+
+    <div class="rent-container">
+        <div class="header">
+            <h2>Vehicle<span>Rental</span></h2>
+            <button class="close-btn" onclick="send('close')">✕</button>
+        </div>
+
+        <div class="vehicle-grid">
+            <div class="v-card" onclick="rentVeh(0, 3500)">
+                <div class="v-icon">🏍️</div>
+                <div class="v-name">BF-400</div>
+                <div class="v-price">$3,500</div>
+            </div>
+
+            <div class="v-card" onclick="rentVeh(1, 500)">
+                <div class="v-icon">🚲</div>
+                <div class="v-name">BMX</div>
+                <div class="v-price">$500</div>
+            </div>
+
+            <div class="v-card" onclick="rentVeh(2, 4000)">
+                <div class="v-icon">🏍️</div>
+                <div class="v-name">SANCHEZ</div>
+                <div class="v-price">$4,000</div>
+            </div>
+
+            <div class="v-card" onclick="rentVeh(3, 6500)">
+                <div class="v-icon">🚚</div>
+                <div class="v-name">BOBCAT</div>
+                <div class="v-price">$6,500</div>
+            </div>
+
+            <div class="v-card" onclick="rentVeh(4, 10000)">
+                <div class="v-icon">🏎️</div>
+                <div class="v-name">SUPER GT</div>
+                <div class="v-price">$10,000</div>
+            </div>
+
+            <div class="v-card" onclick="rentVeh(5, 9500)">
+                <div class="v-icon">🚗</div>
+                <div class="v-name">ZR-350</div>
+                <div class="v-price">$9,500</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function rentVeh(vehIndex, price) {
+            if (typeof cef !== 'undefined') {
+                cef.emit('rentAction', 'confirm|' + vehIndex + '|' + price);
+            } else {
+                console.log('rentAction', 'confirm|' + vehIndex + '|' + price);
+            }
+        }
+
+        function send(action) {
+            if (typeof cef !== 'undefined') cef.emit('rentAction', action);
+            else console.log('rentAction', action);
+        }
+    </script>
+</body>
+</html>

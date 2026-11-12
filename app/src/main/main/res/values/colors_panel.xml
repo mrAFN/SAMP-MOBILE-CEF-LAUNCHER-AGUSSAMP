@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Panel tombol in-game (ButtonPanel) -->
+    <color name="panel_key_text">#F2FFFFFF</color>
+    <color name="panel_key_red">#FFB3BF</color>
+    <color name="panel_key_green">#A8F2CB</color>
+    <color name="panel_key_cyan">#9BEAFF</color>
+    <color name="panel_key_amber">#FFD98A</color>
+</resources>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weapon HUD</title>
+<style>
+:root {
+    --accent: #5ee7ff;
+    --accent-2: #3b82f6;
+    --danger: #ff5d7a;
+    --glass-bg: rgba(12, 18, 30, 0.45);
+    --glass-border: rgba(255, 255, 255, 0.16);
+    --text: #ffffff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+
+html, body {
+    background: transparent;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    font-family: "Segoe UI", "Roboto", Arial, sans-serif;
+}
+
+/* ===== Container kanan atas ===== */
+.top-right-hud {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    animation: slideIn 0.6s cubic-bezier(.2,.8,.2,1) both;
+}
+
+/* ===== Kotak glass umum ===== */
+.glass {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    color: var(--text);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255,255,255,0.12);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* ===== Stat (health & armor) ===== */
+.stat {
+    height: 44px;
+    padding: 0 14px;
+    min-width: 110px;
+}
+
+.stat-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+}
+
+.bar-bg {
+    flex: 1;
+    height: 6px;
+    min-width: 58px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 999px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.5);
+}
+
+.bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    transition: width 0.35s ease;
+}
+
+.fill-health {
+    background: linear-gradient(90deg, #ff5d7a, #ff9a8b);
+    box-shadow: 0 0 8px rgba(255, 93, 122, 0.6);
+}
+
+.fill-armor {
+    background: linear-gradient(90deg, #3b82f6, #5ee7ff);
+    box-shadow: 0 0 8px rgba(94, 231, 255, 0.6);
+}
+
+.stat-value {
+    font-size: 12px;
+    font-weight: 700;
+    min-width: 28px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+}
+
+/* ===== Tombol tinju ===== */
+.fist-btn {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border-radius: 16px;
+    cursor: pointer;
+    background: linear-gradient(135deg, rgba(94,231,255,0.25), rgba(59,130,246,0.35));
+    border: 1px solid rgba(94,231,255,0.5);
+    box-shadow: 0 0 18px rgba(94,231,255,0.25), inset 0 1px 0 rgba(255,255,255,0.25);
+    overflow: hidden;
+}
+
+.fist-btn::before {
+    /* Kilau yang bergerak saat hover */
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -60%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.45), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.6s ease;
+}
+
+.fist-btn:hover::before { left: 120%; }
+
+.fist-btn svg {
+    width: 26px;
+    height: 26px;
+    display: block;
+    margin: auto;
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.45));
+    transition: transform 0.2s ease;
+}
+
+.fist-btn:hover {
+    transform: translateY(-2px);
+    border-color: rgba(94,231,255,0.9);
+    box-shadow: 0 0 24px rgba(94,231,255,0.5), inset 0 1px 0 rgba(255,255,255,0.35);
+}
+
+.fist-btn:hover svg { transform: scale(1.08); }
+
+.fist-btn:active {
+    transform: translateY(0) scale(0.95);
+}
+
+/* Efek tekan (ripple) */
+.fist-btn .ripple {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(circle, rgba(255,255,255,0.5), transparent 70%);
+    opacity: 0;
+    pointer-events: none;
+}
+.fist-btn.pressed .ripple {
+    animation: ripple 0.45s ease-out;
+}
+
+@keyframes ripple {
+    0%   { opacity: 0.9; transform: scale(0.4); }
+    100% { opacity: 0;   transform: scale(1.6); }
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<div class="top-right-hud">
+
+    <!-- Health -->
+    <div class="glass stat" id="health-box">
+        <svg class="stat-icon" viewBox="0 0 24 24" fill="#ff7a90">
+            <path d="M12 21s-7.5-4.6-9.6-9.1C.9 8.5 2.6 5 6.2 5c2.1 0 3.5 1.2 4.3 2.4h3C14.3 6.2 15.7 5 17.8 5c3.6 0 5.3 3.5 3.8 6.9C19.5 16.4 12 21 12 21z"/>
+        </svg>
+        <div class="bar-bg">
+            <div class="bar-fill fill-health" id="health-bar" style="width: 100%;"></div>
+        </div>
+        <span class="stat-value" id="health-val">100</span>
+    </div>
+
+    <!-- Armor -->
+    <div class="glass stat" id="armor-box">
+        <svg class="stat-icon" viewBox="0 0 24 24" fill="#5ee7ff">
+            <path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3z"/>
+        </svg>
+        <div class="bar-bg">
+            <div class="bar-fill fill-armor" id="armor-bar" style="width: 100%;"></div>
+        </div>
+        <span class="stat-value" id="armor-val">100</span>
+    </div>
+
+    <!-- Tombol tinju -->
+    <div class="fist-btn" id="weapon-btn" onclick="toggleWeaponMenu(this)" title="Tinju / Senjata">
+        <span class="ripple"></span>
+        <svg viewBox="0 0 24 24" fill="#ffffff">
+            <path d="M7 3h8.5c1.4 0 2.5 1.1 2.5 2.5V9h-1V5.5c0-.8-.7-1.5-1.5-1.5H7V3zm0 3v4h11V6H7zM6 10.5V18c0 2.2 1.8 4 4 4h3.5c1.9 0 3.5-1.3 3.9-3.1l.6-2.9H17V10.5H6z"/>
+        </svg>
+    </div>
+
+</div>
+
+<script>
+    function clamp(v) {
+        return Math.max(0, Math.min(100, parseInt(v, 10) || 0));
+    }
+
+    // data: "hp|armor"
+    function updateVitals(data) {
+        const parts = String(data).split('|');
+        if (parts.length < 2) return;
+        const health = clamp(parts[0]);
+        const armor  = clamp(parts[1]);
+
+        document.getElementById('health-bar').style.width = health + '%';
+        document.getElementById('armor-bar').style.width  = armor + '%';
+        document.getElementById('health-val').innerText   = health;
+        document.getElementById('armor-val').innerText    = armor;
+    }
+
+    function toggleWeaponMenu(el) {
+        if (el) {
+            el.classList.remove('pressed');
+            void el.offsetWidth; // restart animasi ripple
+            el.classList.add('pressed');
+        }
+        if (typeof cef !== 'undefined') {
+            cef.emit('toggleWeaponMenu');
+        } else {
+            console.log('Tombol senjata diklik');
+        }
+    }
+
+    function onCefEvent(event, data) {
+        if (event === "updateVitals") updateVitals(data);
+    }
+</script>
+
+</body>
+</html>

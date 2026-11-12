@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Speedometer</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+:root {
+    --cyan: #00eaff;
+    --blue: #4285ff;
+    --white: #eafaff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body {
+    background: transparent;
+    font-family: "Segoe UI", Arial, sans-serif;
+    overflow: hidden;
+    
+    /* Posisi Kiri Bawah */
+    display: flex;
+    justify-content: flex-start; 
+    align-items: flex-end;
+    height: 100vh;
+    
+    /* 🔥 UBAH JARAK DARI KIRI AGAR TIDAK MENABRAK HBE 🔥 */
+    /* HBE butuh ~250px, kita kasih 265px agar ada jarak sedikit */
+    padding-left: 265px; 
+    
+    /* Samakan dengan tinggi HBE (24px) */
+    padding-bottom: 24px; 
+}
+
+/* =========================================
+   CONTAINER UTAMA (LIQUID GLASS)
+   ========================================= */
+.speedo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 16px;
+    border-radius: 12px;
+    
+    /* Liquid Glass — putih transparan tipis, sama seperti HUD water level */
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 6px 26px 0 rgba(0, 0, 0, 0.37);
+        
+    /* Efek Muncul/Hilang */
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.speedo-container.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* =========================================
+   ANGKA SPEED (UTAMA)
+   ========================================= */
+.speed-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 60px;
+}
+
+.speed-number {
+    font-size: 28px;
+    font-weight: 900;
+    color: #ffffff;
+    line-height: 1;
+    text-shadow: 0 0 10px rgba(0, 234, 255, 0.6);
+    font-style: italic;
+}
+
+.speed-label {
+    font-size: 9px;
+    font-weight: 800;
+    color: var(--cyan);
+    letter-spacing: 2px;
+    margin-top: 2px;
+}
+
+/* =========================================
+   BAR INDIKATOR (HEALTH & FUEL)
+   ========================================= */
+.bars-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100px;
+}
+
+.stat-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.stat-bar i {
+    font-size: 12px;
+    width: 14px;
+    text-align: center;
+}
+
+/* Ikon Warna */
+.icon-health { color: #34c759; filter: drop-shadow(0 0 3px rgba(52,199,89,0.6)); }
+.icon-fuel { color: #ff9500; filter: drop-shadow(0 0 3px rgba(255,149,0,0.6)); }
+
+/* Wadah Bar */
+.bar-bg {
+    flex: 1;
+    height: 6px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Isi Bar */
+.bar-fill {
+    height: 100%;
+    width: 100%;
+    border-radius: 4px;
+    transition: width 0.3s ease-out;
+}
+
+/* Warna Isi */
+.fill-health { background: #34c759; box-shadow: 0 0 6px #34c759; }
+.fill-fuel { background: #ff9500; box-shadow: 0 0 6px #ff9500; }
+</style>
+</head>
+<body>
+
+<div class="speedo-container" id="speedo-panel">
+    
+    <!-- Angka Speed -->
+    <div class="speed-display">
+        <div class="speed-number" id="speed-val">0</div>
+        <div class="speed-label">KM/H</div>
+    </div>
+
+    <!-- Bar Health & Fuel -->
+    <div class="bars-container">
+        <!-- Health -->
+        <div class="stat-bar">
+            <i class="fa-solid fa-car-side icon-health"></i>
+            <div class="bar-bg">
+                <div class="bar-fill fill-health" id="veh-health" style="width: 100%;"></div>
+            </div>
+        </div>
+        
+        <!-- Fuel -->
+        <div class="stat-bar">
+            <i class="fa-solid fa-gas-pump icon-fuel"></i>
+            <div class="bar-bg">
+                <div class="bar-fill fill-fuel" id="veh-fuel" style="width: 100%;"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function updateSpeedometer(data) {
+        const parts = data.split('|');
+        if (parts.length < 3) return;
+
+        const panel = document.getElementById('speedo-panel');
+        
+        // Munculkan panel (hapus class 'hidden')
+        panel.classList.remove('hidden');
+
+        const speed = parseFloat(parts[0]) || 0;
+        const health = parseFloat(parts[1]) || 0;
+        const fuel = parseFloat(parts[2]) || 0;
+
+        // Update Angka Speed
+        document.getElementById('speed-val').innerText = Math.round(speed);
+
+        // Update Bar Health (Max 1000, Min 350)
+        let healthPercent = ((health - 350) / 650) * 100;
+        if (healthPercent > 100) healthPercent = 100;
+        if (healthPercent < 0) healthPercent = 0;
+        document.getElementById('veh-health').style.width = healthPercent + '%';
+
+        // Update Bar Fuel (Max 250)
+        let fuelPercent = (fuel / 250) * 100;
+        if (fuelPercent > 100) fuelPercent = 100;
+        if (fuelPercent < 0) fuelPercent = 0;
+        document.getElementById('veh-fuel').style.width = fuelPercent + '%';
+    }
+
+    function hideSpeedometer() {
+        document.getElementById('speedo-panel').classList.add('hidden');
+    }
+
+    function onCefEvent(event, data) {
+        if (event === "updateSpeedo") {
+            updateSpeedometer(data);
+        } else if (event === "hideSpeedo") {
+            hideSpeedometer();
+        }
+    }
+</script>
+
+</body>
+</html>

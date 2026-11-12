@@ -1,0 +1,145 @@
+[26-09-2026 05:40:29] [info] Initializing Alyn_SAMPMOBILE client...
+[26-09-2026 05:40:29] [info] Java VM: 0x7F51D1D1C0
+[26-09-2026 05:40:29] [info] Game version: GTA: SA v2.10 (arm64-v8a)
+[26-09-2026 05:40:29] [info] Game directory: /storage/emulated/0/Android/data/ro.alynsampmobile.launcher/files/
+[26-09-2026 05:40:29] [info] Offline mode: false
+[26-09-2026 05:40:29] [info] Initializing settings...
+[26-09-2026 05:40:29] [info] host 103.253.245.20
+[26-09-2026 05:40:29] [info] port 7159
+[26-09-2026 05:40:29] [info] password 
+[26-09-2026 05:40:29] [info] nick_name Suzu
+[26-09-2026 05:40:29] [info] samp_version 0
+[26-09-2026 05:40:29] [info] new_interface false
+[26-09-2026 05:40:29] [info] system_keyboard false
+[26-09-2026 05:40:29] [info] timestamp false
+[26-09-2026 05:40:29] [info] fast_connect false
+[26-09-2026 05:40:29] [info] voice_chat false
+[26-09-2026 05:40:29] [info] display_fps false
+[26-09-2026 05:40:29] [info] fps_limit 60
+[26-09-2026 05:40:29] [info] chat_strings 5
+[26-09-2026 05:40:29] [info] font_size 26
+[26-09-2026 05:40:29] [info] chat_pos 100 10
+[26-09-2026 05:40:29] [info] chat_size 400 150
+[26-09-2026 05:40:29] [info] SA-MP version: 0.3.7
+[26-09-2026 05:40:29] [info] Loading libGTASA.so...
+[26-09-2026 05:40:29] [info] Open: libGTASA.so Handle: 0x7E64CD3D20
+[26-09-2026 05:40:29] [info] libGTASA.so loaded at 0x7EBDBC1000
+[26-09-2026 05:40:29] [info] Initializing SA...
+[26-09-2026 05:40:29] [info] Loading BASS library..
+[26-09-2026 05:40:29] [info] Installing hooks...
+[26-09-2026 05:40:29] [info] Installing pickup hooks...
+[26-09-2026 05:40:29] [info] Installing remove building hooks...
+[26-09-2026 05:40:29] [info] Installing pad hooks...
+[26-09-2026 05:40:29] [info] Installing widget fix hooks...
+[26-09-2026 05:40:29] [info] Installing crosshair fix hooks...
+[26-09-2026 05:40:29] [info] Applying patches...
+[26-09-2026 05:40:29] [info] Allocating world players...
+[26-09-2026 05:40:29] [info] CWorld::Players new address: 0x7E7048C3C0, old address: 0x7EBE79D738, size: 84840
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebdf26f10 bytes: 84 d2 fa 97 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe09a254 bytes: 27 53 f5 97 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe0830a4 bytes: f7 0f 1c f8 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe2b1bd8 bytes: ef 3b b6 6d 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe0dd3e0 bytes: ff 03 01 d1 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe0dd488 bytes: e9 23 bc 6d 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe0dfad8 bytes: ff 03 01 d1 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebdf85638 bytes: ff 43 05 d1 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebdf85728 bytes: ff 83 05 d1 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebdf844ac bytes: ff 03 02 d1 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebdf8445c bytes: f3 0f 1e f8 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe184970 bytes: 68 32 06 b9 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe0a154c bytes: 5d f7 f4 97 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe0a1598 bytes: 4a f7 f4 97 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe29dc30 bytes: ff c3 06 d1 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe1dc044 bytes: ff 03 02 d1 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe18fb40 bytes: ff c3 01 d1 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe235610 bytes: 40 a3 ee 97 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe243c1c bytes: bd 69 ee 97 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe24ed0c bytes: 81 3d ee 97 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe261a68 bytes: 2a f2 ed 97 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe2cb3d0 bytes: 40 80 ec 97 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe2469bc bytes: a8 00 00 54 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe0b17dc bytes: 59 da f4 97 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe033904 bytes: ff 43 03 d1 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe25d8f4 bytes: ff c3 02 d1 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe117e14 bytes: ff 83 00 d1 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebdf8d58c bytes: f5 0f 1d f8 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe0b1c94 bytes: 08 00 40 f9 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe0e7e78 bytes: ff 03 02 d1 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe0e7cac bytes: f3 0f 1e f8 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe0e622c bytes: c5 20 f4 97 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe0e6e14 bytes: cb 1d f4 97 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe0c6bf8 bytes: e9 23 bb 6d 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe2cb61c bytes: f5 0f 1d f8 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe195338 bytes: ff 03 01 d1 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe15cad0 bytes: 58 0b f2 97 08 3c 46 39 28 06 00 34 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe215a8c bytes: e8 0f 1b fc 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe098e98 bytes: ff c3 00 d1 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebdf6cb3c bytes: f3 0f 1e f8 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe251560 bytes: f4 4f be a9 
+[26-09-2026 05:40:29] [info] saveBytesToMap addr: 0x7ebe03c340 bytes: f5 0f 1d f8 
+[26-09-2026 05:40:29] [info] Initializing multi touch..
+[26-09-2026 05:40:29] [info] Initializing java..
+[26-09-2026 05:40:30] [info] Initializing samp texture database...
+[26-09-2026 05:40:30] [error]  
+[26-09-2026 05:40:30] [error] ========== TaxGuz Launcher Crashed ==========
+[26-09-2026 05:40:30] [error] Device: POCO F1
+[26-09-2026 05:40:30] [error] ABI: arm64-v8a
+[26-09-2026 05:40:30] [error] Android Version: 10
+[26-09-2026 05:40:30] [error]  
+[26-09-2026 05:40:30] [error] Last Script Command: 
+[26-09-2026 05:40:30] [error] Last Rendered Object Model: -1
+[26-09-2026 05:40:30] [error]  
+[26-09-2026 05:40:30] [error] Cause: De-referencing a null pointer
+[26-09-2026 05:40:30] [error] Signal: 11 (SIGSEGV)
+[26-09-2026 05:40:30] [error] Code: 1 (SEGV_MAPERR)
+[26-09-2026 05:40:30] [error] Fault Address: 0x17FF5
+[26-09-2026 05:40:30] [error]  
+[26-09-2026 05:40:30] [error] Register States:
+[26-09-2026 05:40:30] [error] 	x0: 0x419011C0
+[26-09-2026 05:40:30] [error] 	x1: 0x0
+[26-09-2026 05:40:30] [error] 	x2: 0x0
+[26-09-2026 05:40:30] [error] 	x3: 0x41906040
+[26-09-2026 05:40:30] [error] 	x4: 0x419060C0
+[26-09-2026 05:40:30] [error] 	x5: 0x4
+[26-09-2026 05:40:30] [error] 	x6: 0x1
+[26-09-2026 05:40:30] [error] 	x7: 0x54000
+[26-09-2026 05:40:30] [error] 	x8: 0x15
+[26-09-2026 05:40:30] [error] 	x9: 0x13C0
+[26-09-2026 05:40:30] [error] 	x10: 0x41ADA380
+[26-09-2026 05:40:30] [error] 	x11: 0x419011C0
+[26-09-2026 05:40:30] [error] 	x12: 0x24D9F680
+[26-09-2026 05:40:30] [error] 	x13: 0x24D76480
+[26-09-2026 05:40:30] [error] 	x14: 0x17FE8
+[26-09-2026 05:40:30] [error] 	x15: 0x1248
+[26-09-2026 05:40:30] [error] 	x16: 0x24900
+[26-09-2026 05:40:30] [error] 	x17: 0x5092B5C0
+[26-09-2026 05:40:30] [error] 	x18: 0x418F40B3
+[26-09-2026 05:40:30] [error] 	x19: 0x13C0
+[26-09-2026 05:40:30] [error] 	x20: 0x13C0
+[26-09-2026 05:40:30] [error] 	x21: 0x41883BC0
+[26-09-2026 05:40:30] [error] 	x22: 0x419011C0
+[26-09-2026 05:40:30] [error] 	x23: 0x41ADA380
+[26-09-2026 05:40:30] [error] 	x24: 0x24D76480
+[26-09-2026 05:40:30] [error] 	x25: 0x0
+[26-09-2026 05:40:30] [error] 	x26: 0x419011C0
+[26-09-2026 05:40:30] [error] 	x27: 0x13C0
+[26-09-2026 05:40:30] [error] 	x28: 0xBE475E88
+[26-09-2026 05:40:30] [error] 	x29: 0xC24D3A40
+[26-09-2026 05:40:30] [error] 	x30: 0xBDE47F0C
+[26-09-2026 05:40:30] [error] 	SP: 0xC24D39B0, PC: 0xBDE47F68
+[26-09-2026 05:40:30] [error]  
+[26-09-2026 05:40:30] [error] BackTrace:
+[26-09-2026 05:40:30] [error] 	#0 [/system/bin/app_process64:0x892CD000] + 0x4CBC | [unknown symbol+-1993532228]
+[26-09-2026 05:40:30] [error] 	#1 [[vdso]:0x5311E000] + 0x820 | [__kernel_rt_sigreturn+0]
+[26-09-2026 05:40:30] [error] 	#2 [/data/app/ro.alynsampmobile.launcher-eY-8B5-M5S2o2jiiYdnGTg==/base.apk!/lib/arm64-v8a/libGTASA.so:0xBDBC1000] + 0x286F68 | [TextureDatabaseRuntime::SortEntries(bool)+624]
+[26-09-2026 05:40:30] [error] 	#3 [/data/app/ro.alynsampmobile.launcher-eY-8B5-M5S2o2jiiYdnGTg==/base.apk!/lib/arm64-v8a/libGTASA.so:0xBDBC1000] + 0x28786C | [TextureDatabaseRuntime::Load(char const*, bool, TextureDatabaseFormat)+336]
+[26-09-2026 05:40:30] [error] 	#4 [/data/app/ro.alynsampmobile.launcher-eY-8B5-M5S2o2jiiYdnGTg==/base.apk!/lib/arm64-v8a/libAlyn_SAMPMOBILE.so:0x71206000] + 0x2F4A40 | [CGame_InitialiseRenderWare_hook()+268]
+[26-09-2026 05:40:30] [error] 	#5 [/data/app/ro.alynsampmobile.launcher-eY-8B5-M5S2o2jiiYdnGTg==/base.apk!/lib/arm64-v8a/libGTASA.so:0xBDBC1000] + 0x55B65C | [Initialise3D(void*)+20]
+[26-09-2026 05:40:30] [error] 	#6 [/data/app/ro.alynsampmobile.launcher-eY-8B5-M5S2o2jiiYdnGTg==/base.apk!/lib/arm64-v8a/libGTASA.so:0xBDBC1000] + 0x4D94F0 | [AppEventHandler(RsEvent, void*)+184]
+[26-09-2026 05:40:30] [error] 	#7 [/data/app/ro.alynsampmobile.launcher-eY-8B5-M5S2o2jiiYdnGTg==/base.apk!/lib/arm64-v8a/libGTASA.so:0xBDBC1000] + 0x5D49BC | [RsEventHandler(RsEvent, void*)+24]
+[26-09-2026 05:40:30] [error] 	#8 [/data/app/ro.alynsampmobile.launcher-eY-8B5-M5S2o2jiiYdnGTg==/base.apk!/lib/arm64-v8a/libGTASA.so:0xBDBC1000] + 0x70AF1C | [OS_ApplicationStartup(int, int, int, char const**)+320]
+[26-09-2026 05:40:30] [error] 	#9 [/data/app/ro.alynsampmobile.launcher-eY-8B5-M5S2o2jiiYdnGTg==/base.apk!/lib/arm64-v8a/libGTASA.so:0xBDBC1000] + 0x31F30C | [NVEventAppMain(int, char**)+916]
+[26-09-2026 05:40:30] [error] 	#10 [/data/app/ro.alynsampmobile.launcher-eY-8B5-M5S2o2jiiYdnGTg==/base.apk!/lib/arm64-v8a/libGTASA.so:0xBDBC1000] + 0x335000 | [unknown symbol+-1108385792]
+[26-09-2026 05:40:30] [error] 	#11 [/data/app/ro.alynsampmobile.launcher-eY-8B5-M5S2o2jiiYdnGTg==/base.apk!/lib/arm64-v8a/libGTASA.so:0xBDBC1000] + 0x33214C | [unknown symbol+-1108397748]
+[26-09-2026 05:40:30] [error] 	#12 [/apex/com.android.runtime/lib64/bionic/libc.so:0x508C0000] + 0xD20C4 | [unknown symbol+1352212676]
+[26-09-2026 05:40:30] [error] 	#13 [/apex/com.android.runtime/lib64/bionic/libc.so:0x508C0000] + 0x712A4 | [unknown symbol+1351815844]

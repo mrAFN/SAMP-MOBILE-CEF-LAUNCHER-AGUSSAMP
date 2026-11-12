@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Panel tombol in-game - dock kaca "keycap".
+    ID lama dipertahankan: buttonpanel_layout, guideline, buttons_layout, button_extend,
+    button_esc, button_tab, button_alt, button_spc, button_f, button_h, button_2, button_y, button_n, button_c, button_g.
+    ID baru: buttons_dock (wadah semua tombol, dianimasikan saat buka/tutup).
+-->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/buttonpanel_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="HardcodedText,ContentDescription">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.35" />
+
+    <LinearLayout
+        android:id="@+id/buttons_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_6sdp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline">
+
+        <!-- Handle buka/tutup: chevron berputar 180 derajat -->
+        <ImageView
+            android:id="@+id/button_extend"
+            android:layout_width="@dimen/_26sdp"
+            android:layout_height="@dimen/_26sdp"
+            android:background="@drawable/bg_panel_handle"
+            android:clickable="true"
+            android:contentDescription="Tampilkan tombol"
+            android:focusable="true"
+            android:padding="@dimen/_6sdp"
+            android:src="@drawable/ic_panel_chevron" />
+
+        <!-- Dock kaca berisi semua keycap -->
+        <LinearLayout
+            android:id="@+id/buttons_dock"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:background="@drawable/bg_panel_dock"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/_4sdp"
+            android:paddingEnd="@dimen/_4sdp">
+
+        <TextView
+            android:id="@+id/button_esc"
+            style="@style/PanelKey.Wide"
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_marginStart="@dimen/_1sdp"
+            android:layout_marginEnd="@dimen/_1sdp"
+            android:background="@drawable/bg_key_red"
+            android:textColor="@color/panel_key_red"
+            android:text="ESC" />
+
+        <TextView
+            android:id="@+id/button_tab"
+            style="@style/PanelKey.Wide"
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_marginStart="@dimen/_1sdp"
+            android:layout_marginEnd="@dimen/_1sdp"
+            android:text="TAB" />
+
+        <TextView
+            android:id="@+id/button_alt"
+            style="@style/PanelKey.Wide"
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_marginStart="@dimen/_1sdp"
+            android:layout_marginEnd="@dimen/_1sdp"
+            android:text="ALT" />
+
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="@dimen/_12sdp"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:layout_marginEnd="@dimen/_3sdp"
+            android:background="#33FFFFFF" />
+
+        <TextView
+            android:id="@+id/button_spc"
+            style="@style/PanelKey.Wide"
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_marginStart="@dimen/_1sdp"
+            android:layout_marginEnd="@dimen/_1sdp"
+            android:text="SPC" />
+
+        <TextView
+            android:id="@+id/button_f"
+            style="@style/PanelKey.Letter"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_marginStart="@dimen/_1sdp"
+            android:layout_marginEnd="@dimen/_1sdp"
+            android:text="F" />
+
+        <TextView
+            android:id="@+id/button_h"
+            style="@style/PanelKey.Letter"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_marginStart="@dimen/_1sdp"
+            android:layout_marginEnd="@dimen/_1sdp"
+            android:text="H" />
+
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="@dimen/_12sdp"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:layout_marginEnd="@dimen/_3sdp"
+            android:background="#33FFFFFF" />
+
+        <TextView
+            android:id="@+id/button_2"
+            style="@style/PanelKey.Letter"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_marginStart="@dimen/_1sdp"
+            android:layout_marginEnd="@dimen/_1sdp"
+            android:text="2" />
+
+        <TextView
+            android:id="@+id/button_y"
+            style="@style/PanelKey.Letter"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_marginStart="@dimen/_1sdp"
+            android:layout_marginEnd="@dimen/_1sdp"
+            android:background="@drawable/bg_key_green"
+            android:textColor="@color/panel_key_green"
+            android:text="Y" />
+
+        <TextView
+            android:id="@+id/button_n"
+            style="@style/PanelKey.Letter"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_marginStart="@dimen/_1sdp"
+            android:layout_marginEnd="@dimen/_1sdp"
+            android:background="@drawable/bg_key_red"
+            android:textColor="@color/panel_key_red"
+            android:text="N" />
+
+        <TextView
+            android:id="@+id/button_c"
+            style="@style/PanelKey.Letter"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_marginStart="@dimen/_1sdp"
+            android:layout_marginEnd="@dimen/_1sdp"
+            android:background="@drawable/bg_key_cyan"
+            android:textColor="@color/panel_key_cyan"
+            android:text="C" />
+
+        <TextView
+            android:id="@+id/button_g"
+            style="@style/PanelKey.Letter"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_marginStart="@dimen/_1sdp"
+            android:layout_marginEnd="@dimen/_1sdp"
+            android:background="@drawable/bg_key_amber"
+            android:textColor="@color/panel_key_amber"
+            android:text="G" />
+
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

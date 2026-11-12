@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Dock kaca gelap tembus pandang: terbaca di atas adegan terang maupun gelap -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#66101826" />
+            <stroke android:width="1dp" android:color="#33FFFFFF" />
+            <corners android:radius="@dimen/_16sdp" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <gradient android:angle="270" android:endColor="#00FFFFFF" android:startColor="#26FFFFFF" />
+            <corners android:radius="@dimen/_16sdp" />
+        </shape>
+    </item>
+</layer-list>
