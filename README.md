@@ -43,7 +43,7 @@ Buka terminal VS Code (`Ctrl + Shift + ~`).
 Masuk ke direktori proyek:
 
 ```powershell
-cd C:\Users\Guz\Downloads\superfinemobilerp
+cd C:\Users\Guz\Downloads\GuzLauncher
 ```
 
 **Build Debug APK:**
