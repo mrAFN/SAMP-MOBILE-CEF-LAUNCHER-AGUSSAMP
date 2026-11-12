@@ -1,25 +1,146 @@
-# TaxGuz Launcher — v17.x (old source, released officially)
+# SAMP MOBILE CEF LAUNCHER AGUSSAMP
 
-This is a snapshot of the **last 17.x-era source** of TaxGuz Launcher (March 2025):
-the classic Java launcher plus the native C++ SA-MP client (`app/src/main/cpp/Alyn_SAMPMOBILE`)
-that hooks `libGTASA.so` (GTA:SA Android **2.10** only).
+Launcher SA-MP Mobile berbasis Android dengan dukungan CEF (Chromium Embedded Framework), yang dirancang untuk memberikan pengalaman bermain multiplayer GTA: San Andreas Mobile dengan antarmuka HTML.
 
-Released publicly and for free by the author. If you paid someone for this source, you got scammed.
+Dikembangkan dan dikelola oleh **AgusSamp**.
 
-## What was removed before release
+## Fitur
 
-- The signing keystore (`key.jks`) and its signing config — release builds are **unsigned**; set up your own signing.
-- `google-services.json` (Firebase/Crashlytics config) — add your own, or remove the
-  `com.google.gms.google-services` and `com.google.firebase.crashlytics` plugins from `app/build.gradle`.
-- The AppLovin SDK key and ad unit id — now `YOUR_APPLOVIN_SDK_KEY` / `YOUR_AD_UNIT_ID` placeholders.
+- Launcher SA-MP Mobile.
+- Dukungan CEF untuk menampilkan antarmuka berbasis HTML.
+- Integrasi aset HTML melalui WebView.
+- Pengaturan IP dan port server.
+- Dukungan native Android.
+- Mendukung beberapa arsitektur ARM.
 
-## Building
+## Persyaratan
 
-- Android Studio, JDK 17, Android SDK 35, NDK **25.1.8937393**, CMake.
-- ABIs: `armeabi-v7a` + `arm64-v8a`.
-- Requires the GTA: San Andreas Android **2.10** game data on the device; the client only works with that exact build of `libGTASA.so`.
+- Android Studio
+- JDK 17
+- Android SDK 35
+- Android NDK 25.1.8937393
+- CMake
 
-## Notes
+## Arsitektur yang Didukung
 
-- `app/build.gradle` still says `versionName "17.0"` — the 17.1 bump was never committed; this is the final state of the 17.x line before the launcher was rewritten.
-- Study it, learn from it, build something better.
+- `armeabi-v7a`
+- `arm64-v8a`
+
+## Persiapan & Build
+
+1. Clone atau unduh repository ini.
+2. Buka folder proyek menggunakan Android Studio atau Visual Studio Code.
+3. Pastikan Android SDK, NDK, dan CMake sudah terpasang sesuai versi yang dibutuhkan.
+4. Pastikan JDK 17 sudah dikonfigurasi dengan benar.
+5. Lakukan sinkronisasi Gradle.
+6. Atur konfigurasi signing sendiri jika ingin membuat Release APK.
+7. Jalankan perintah Gradle untuk membangun aplikasi.
+
+## Build Menggunakan VS Code
+
+Buka terminal VS Code (`Ctrl + Shift + ~`).
+
+Masuk ke direktori proyek:
+
+```powershell
+cd C:\Users\Guz\Downloads\superfinemobilerp
+```
+
+**Build Debug APK:**
+
+```powershell
+.\gradlew.bat assembleDebug
+```
+
+**Build Release APK:**
+
+```powershell
+.\gradlew.bat assembleRelease
+```
+
+**Membersihkan hasil build sebelumnya:**
+
+```powershell
+.\gradlew.bat clean
+```
+
+**Clean sekaligus Build Debug:**
+
+```powershell
+.\gradlew.bat clean assembleDebug
+```
+
+### Lokasi Hasil APK
+
+Debug APK:
+
+```text
+app\build\outputs\apk\debug\app-debug.apk
+```
+
+Release APK:
+
+```text
+app\build\outputs\apk\release\app-release.apk
+```
+
+## Konfigurasi HTML CEF / WebView
+
+Lokasi penyimpanan file HTML untuk antarmuka WebView/CEF:
+
+```text
+app\src\main\assets\html
+```
+
+Letakkan file berikut di dalam direktori tersebut:
+
+- HTML
+- CSS
+- JavaScript
+- Gambar dan aset pendukung lainnya
+
+Gunakan direktori ini untuk mengelola tampilan dan antarmuka HTML launcher.
+
+## Konfigurasi IP dan Port Server
+
+Untuk mengubah IP dan port server SA-MP, buka file:
+
+```text
+app\src\main\java\ro\alynsampmobile\launcher\ui\fragment\InformationPageFragment.java
+```
+
+Cari konfigurasi berikut:
+
+```java
+private static final String DEFAULT_HOST = "192.168.42.41";
+private static final int DEFAULT_PORT = 7777;
+```
+
+Ubah sesuai IP dan port server yang digunakan.
+
+Contoh:
+
+```java
+private static final String DEFAULT_HOST = "IP_SERVER_KAMU";
+private static final int DEFAULT_PORT = 7777;
+```
+
+## Persyaratan Game
+
+**Penting:** Launcher ini membutuhkan GTA: San Andreas Android versi **2.10** beserta data game yang sesuai agar dapat berjalan dengan baik.
+
+## Kredit & Pengembang
+
+**Developer:** AgusSamp
+
+**Discord Resmi:**
+
+https://discord.gg/FEczPuxwrt
+
+**Grup WhatsApp Resmi:**
+
+https://chat.whatsapp.com/KrecviKYS9a47HrJIZkxHF
+
+---
+
+Dikembangkan oleh **AgusSamp**.
